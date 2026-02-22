@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Daily Attendance QR</title>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+}
+
+button{
+    padding:18px 35px;
+    font-size:20px;
+    cursor:pointer;
+}
+
+#qr{
+    margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<button onclick="showQR()">Show Today's QR</button>
+
+<div id="qr"></div>
+
+<script>
+
+const USER_ID = "523968";
+const ROLE = "student";
+
+function getTodayDate(){
+    const d = new Date();
+
+    return d.getFullYear()+"-"+
+           String(d.getMonth()+1).padStart(2,'0')+"-"+
+           String(d.getDate()).padStart(2,'0');
+}
+
+function showQR(){
+
+    document.getElementById("qr").innerHTML="";
+
+    const qrText =
+        USER_ID + "/" +
+        getTodayDate() + "/" +
+        ROLE;
+
+    new QRCode(document.getElementById("qr"),{
+        text: qrText,
+        width:400,
+        height:400
+    });
+}
+
+</script>
+
+</body>
+</html>
