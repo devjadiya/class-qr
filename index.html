@@ -3,38 +3,60 @@
 <head>
 <title>Daily Attendance QR</title>
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
 
 <style>
-html, body{
+body{
     margin:0;
-    width:800px;        /* Fixed width */
-    height:600px;       /* Fixed height */
-    overflow:hidden;    /* No scroll */
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
+    background:#f4f6f9;
     font-family:Arial, sans-serif;
-    background:#ffffff;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    height:100vh;
 }
 
-/* Small Buttons */
+/* Button Container */
 .button-container{
-    margin-bottom:20px;
+    position:absolute;
+    top:20px;
 }
 
 button{
-    padding:8px 20px;
+    padding:8px 18px;
     font-size:14px;
-    margin:0 10px;
+    margin:0 8px;
+    border:none;
+    border-radius:6px;
+    background:#2c3e50;
+    color:white;
     cursor:pointer;
 }
 
-/* Big QR */
+button:active{
+    transform:scale(0.95);
+}
+
+/* QR Wrapper */
+.qr-wrapper{
+    width:92%;              /* minimum left-right padding */
+    max-width:420px;        /* keeps it clean on big screens */
+    background:white;
+    padding:15px;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.08);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
 #qr{
-    width:400px;
-    height:400px;
+    width:100%;
+    display:flex;
+    justify-content:center;
 }
 </style>
 </head>
@@ -46,13 +68,14 @@ button{
     <button onclick="showQR('dev')">Dev</button>
 </div>
 
-<div id="qr"></div>
+<div class="qr-wrapper">
+    <div id="qr"></div>
+</div>
 
 <script>
 
 const ROLE = "student";
 
-/* Updated User IDs */
 const USERS = {
     aman: "523968",
     dev:  "530589"
@@ -76,10 +99,15 @@ function showQR(person){
 
     new QRCode(document.getElementById("qr"),{
         text: qrText,
-        width:400,
-        height:400
+        width:350,
+        height:350
     });
 }
+
+/* Optional: Show Aman QR by default on load */
+window.onload = function(){
+    showQR('aman');
+};
 
 </script>
 
