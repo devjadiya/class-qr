@@ -34,16 +34,23 @@ button{
     background:#2c3e50;
     color:white;
     cursor:pointer;
+    transition: background 0.2s;
 }
 
 button:active{
     transform:scale(0.95);
 }
 
+/* Selected button style */
+button.selected {
+    background: #1abc9c;  /* Highlight color */
+    color: white;
+}
+
 /* QR Wrapper */
 .qr-wrapper{
-    width:92%;              /* minimum left-right padding */
-    max-width:420px;        /* keeps it clean on big screens */
+    width:92%;
+    max-width:420px;
     background:white;
     padding:15px;
     border-radius:12px;
@@ -73,9 +80,7 @@ button:active{
 </div>
 
 <script>
-
 const ROLE = "student";
-
 const USERS = {
     aman: "523968",
     dev:  "530589"
@@ -89,26 +94,30 @@ function getTodayDate(){
 }
 
 function showQR(person){
+    const qrDiv = document.getElementById("qr");
 
-    document.getElementById("qr").innerHTML="";
+    // Clear previous QR
+    qrDiv.innerHTML = "";
 
-    const qrText =
-        USERS[person] + "/" +
-        getTodayDate() + "/" +
-        ROLE;
+    // Highlight the selected button
+    document.querySelectorAll('.button-container button').forEach(btn => {
+        btn.classList.remove('selected');
+    });
+    document.querySelector(`.button-container button[onclick="showQR('${person}')"]`).classList.add('selected');
 
-    new QRCode(document.getElementById("qr"),{
+    // Generate new QR
+    const qrText = USERS[person] + "/" + getTodayDate() + "/" + ROLE;
+    new QRCode(qrDiv, {
         text: qrText,
-        width:350,
-        height:350
+        width: 350,
+        height: 350
     });
 }
 
-/* Optional: Show Aman QR by default on load */
+// Show Aman QR by default
 window.onload = function(){
     showQR('aman');
 };
-
 </script>
 
 </body>
